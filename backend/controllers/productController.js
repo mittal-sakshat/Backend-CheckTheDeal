@@ -50,9 +50,8 @@ exports.createProduct = catchAsyncErrors(async (req,res,next) =>{
 
 // Get All Product
 exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
-  const resultPerPage = 8;
+  const resultPerPage = 5;
   const productsCount = await Product.countDocuments();
-
   const apiFeature = new ApiFeatures(Product.find(), req.query)
     .search()
     .filter();
@@ -84,7 +83,7 @@ exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-//get productDetails --Admin
+//get productDetails
 
 exports.getProductDetails = catchAsyncErrors(async(req,res,next) =>{
     const product = await Product.findById(req.params.id)
@@ -108,7 +107,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
 
   if (!product) {
-    return next(new ErrorHander("Product not found", 404));
+    return next(new ErrorHandler("Product not found", 404));
   }
 
   // Images Start Here
@@ -244,7 +243,7 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     const product = await Product.findById(req.query.productId);
 
     if (!product) {
-      return next(new ErrorHander("Product not found", 404));
+      return next(new ErrorHandler("Product not found", 404));
     }
 
     const reviews = product.reviews.filter(
